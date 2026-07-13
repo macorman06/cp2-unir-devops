@@ -1,0 +1,24 @@
+# Terraform
+terraform/.terraform/
+terraform/terraform.tfvars
+terraform/terraform.tfstate*
+*.tfstate*
+
+# Secrets
+.env
+ansible/secrets.yml
+*.vault
+
+# OS
+.DS_Store
+Thumbs.db
+
+# SSH
+*.pem
+id_rsa*
+
+# Kubeconfig
+kubeconfig
+
+# Runtime data (PVC)
+app-aks/data/

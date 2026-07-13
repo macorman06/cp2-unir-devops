@@ -1,0 +1,75 @@
+---
+# Configura la VM: instala Podman, descarga la imagen del ACR
+# y arranca el contenedor como servicio systemd
+- name: Deploy Podman app with systemd service
+  hosts: vm
+  gather_facts: yes
+  vars:
+    container_name: webapp
+    image_tag: casopractico2
+    image_name: "{{ acr_server }}/app-podman:{{ image_tag }}"
+
+  tasks:
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+    - name: Install Podman
+      ansible.builtin.apt:
+        name: podman
+        state: present
+
+    - name: Create containers directory
+      ansible.builtin.file:
+        path: /etc/containers
+        state: directory
+        mode: "0755"
+
+    - name: Login to ACR
+      containers.podman.podman_login:
+        registry: "{{ acr_server }}"
+        username: "{{ acr_user }}"
+        password: "{{ acr_pass }}"
+
+    - name: Pull image from ACR
+      containers.podman.podman_image:
+        name: "{{ image_name }}"
+        state: present
+
+    - name: Remove existing container if any
+      containers.podman.podman_container:
+        name: "{{ container_name }}"
+        state: absent
+
+    - name: Create container with systemd unit
+      containers.podman.podman_container:
+        name: "{{ container_name }}"
+        image: "{{ image_name }}"
+        state: started
+        ports:
+          - "443:443"
+        generate_systemd:
+          path: /etc/systemd/system
+          restart_policy: always
+          container_prefix: container
+
+    - name: Reload systemd
+      ansible.builtin.systemd:
+        daemon_reload: yes
+
+    - name: Enable and start service
+      ansible.builtin.systemd:
+        name: container-{{ container_name }}
+        enabled: yes
+        state: started
+
+    - name: Check container is running
+      containers.podman.podman_container:
+        name: "{{ container_name }}"
+        state: started
+      register: container_status
+
+    - name: Show verification command
+      ansible.builtin.debug:
+        msg: "Container {{ container_name }} running. Verify: curl -k -u alumno:unir2026 https://{{ ansible_host }}/"

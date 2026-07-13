@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-aks
+  labels:
+    app: app-aks
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-aks
+  template:
+    metadata:
+      labels:
+        app: app-aks
+    spec:
+      containers:
+        - name: app
+          image: "mcorpcp2unir.azurecr.io/app-aks:casopractico2"
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: persistent-storage
+              mountPath: /data
+      volumes:
+        - name: persistent-storage
+          persistentVolumeClaim:
+            claimName: counter-pvc

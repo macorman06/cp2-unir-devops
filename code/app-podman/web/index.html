@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marcos Corpas | Inicio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #0f0f1a 0%, #1a1035 50%, #0f1a2e 100%);
+      color: #e2e8f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      max-width: 720px;
+      width: 100%;
+      padding: 2rem;
+      text-align: center;
+    }
+    .avatar {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    h1 span { background: linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    h2 {
+      font-size: 1.3rem;
+      color: #a855f7;
+      font-weight: 600;
+      margin-bottom: 1.2rem;
+    }
+    p {
+      color: #94a3b8;
+      line-height: 1.7;
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+    }
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .links a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .links a:hover { color: #a855f7; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.6rem 1.5rem;
+      border: 1px solid #475569;
+      border-radius: 0.5rem;
+      color: #f1f5f9;
+      background: #0f172a;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #1e293b; }
+    .divider {
+      width: 1px;
+      height: 2rem;
+      background: #475569;
+    }
+    .actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .about {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      text-align: left;
+    }
+    .about h3 {
+      color: #a855f7;
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+    .about ul {
+      list-style: none;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
+    .about ul li {
+      color: #94a3b8;
+      font-size: 0.9rem;
+      padding: 0.3rem 0;
+    }
+    .about ul li::before { content: "> "; color: #a855f7; }
+    @media (max-width: 480px) {
+      h1 { font-size: 1.8rem; }
+      .about ul { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img class="avatar" src="avatar_mcorpas.png" alt="Marcos Corpas">
+    <h1>Hey, soy <span>Marcos</span></h1>
+    <h2>Ingeniero Aeroespacial</h2>
+    <p>Apasionado por crear y dar forma a ideas, desde desarrollo backend con Python hasta proyectos fullstack y dise&ntilde;o 3D.</p>
+
+    <div class="links">
+      <a href="https://github.com/macorman06" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/marcos-corpas-manzano-8146391aa/" target="_blank">LinkedIn</a>
+      <a href="mailto:marcos@corpas.dev">Email</a>
+    </div>
+
+    <div class="actions">
+      <a href="mailto:marcos@corpas.dev" class="btn">Cont&aacute;ctame</a>
+      <span class="divider"></span>
+      <a href="https://mcorpas.pages.dev" class="btn">Ver Proyectos</a>
+    </div>
+  </div>
+</body>
+</html>

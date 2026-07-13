@@ -1,0 +1,47 @@
+---
+# Despliega la app en AKS con volumen persistente
+- name: Deploy app on AKS with PVC
+  hosts: localhost
+  gather_facts: no
+  vars:
+    k8s_namespace: cp2
+    image_tag: casopractico2
+    app_name: app-aks
+    pvc_name: counter-pvc
+
+  tasks:
+    - name: Create namespace
+      kubernetes.core.k8s:
+        state: present
+        template: templates/aks-namespace.j2
+
+    - name: Create PVC
+      kubernetes.core.k8s:
+        state: present
+        template: templates/aks-pvc.j2
+        namespace: "{{ k8s_namespace }}"
+
+    - name: Create Deployment
+      kubernetes.core.k8s:
+        state: present
+        template: templates/aks-deployment.j2
+        namespace: "{{ k8s_namespace }}"
+
+    - name: Create Service (LoadBalancer)
+      kubernetes.core.k8s:
+        state: present
+        template: templates/aks-service.j2
+        namespace: "{{ k8s_namespace }}"
+
+    - name: Wait for LoadBalancer IP
+      kubernetes.core.k8s_info:
+        kind: Service
+        name: "{{ app_name }}"
+        namespace: "{{ k8s_namespace }}"
+        wait: yes
+        wait_timeout: 180
+      register: svc_result
+
+    - name: Show endpoint
+      ansible.builtin.debug:
+        msg: "App AKS at http://{{ svc_result.resources[0].status.loadBalancer.ingress[0].ip | default('pendiente') }}/"

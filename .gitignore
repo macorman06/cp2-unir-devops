@@ -1,0 +1,18 @@
+# Agent artifacts
+.claude/
+.opencode/
+.playwright-mcp/
+BITACORA.md
+PLAN.md
+
+# Guías auxiliares (no forman parte del proyecto)
+guia-completa-cp2.html
+master-cp2.html
+add-abbr.ps1
+
+# Informe (se entrega aparte)
+informe/
+
+# OS
+.DS_Store
+Thumbs.db

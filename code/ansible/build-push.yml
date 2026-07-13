@@ -1,0 +1,48 @@
+---
+# Construye las dos imágenes y las sube al ACR
+- name: Build and push images to ACR
+  hosts: localhost
+  gather_facts: no
+  vars:
+    podman_platform: linux/amd64
+    podman_arch: amd64
+    app_podman_dir: "{{ playbook_dir }}/../app-podman"
+    app_aks_dir: "{{ playbook_dir }}/../app-aks"
+    image_tag: casopractico2
+
+  tasks:
+    - name: Login to ACR
+      containers.podman.podman_login:
+        registry: "{{ acr_server }}"
+        username: "{{ acr_user }}"
+        password: "{{ acr_pass }}"
+
+    - name: Build app-podman
+      containers.podman.podman_image:
+        name: "{{ acr_server }}/app-podman"
+        tag: "{{ image_tag }}"
+        path: "{{ app_podman_dir }}"
+        arch: "{{ podman_arch }}"
+        state: build
+
+    - name: Build app-aks
+      containers.podman.podman_image:
+        name: "{{ acr_server }}/app-aks"
+        tag: "{{ image_tag }}"
+        path: "{{ app_aks_dir }}"
+        arch: "{{ podman_arch }}"
+        state: build
+
+    - name: Push app-podman
+      containers.podman.podman_image:
+        name: "{{ acr_server }}/app-podman"
+        tag: "{{ image_tag }}"
+        push: yes
+        state: present
+
+    - name: Push app-aks
+      containers.podman.podman_image:
+        name: "{{ acr_server }}/app-aks"
+        tag: "{{ image_tag }}"
+        push: yes
+        state: present
